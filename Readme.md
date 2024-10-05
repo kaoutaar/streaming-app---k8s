@@ -105,10 +105,10 @@ Now the images are ready, we need to build our yaml files and set the configurat
 Make sure all the containers are up and run in order
 
 ```
-kubectl apply -f ./yamls/zookeeper
-kubectl apply -f ./yamls/kafka
-kubectl apply -f ./yamls/spark
-kubectl apply -f ./yamls/app
+kubectl apply -f ./yamls/zookeeper.yaml
+kubectl apply -f ./yamls/kafka.yaml
+kubectl apply -f ./yamls/spark.yaml
+kubectl apply -f ./yamls/app.yaml
 ```
 
 check that all pods and services are running:
