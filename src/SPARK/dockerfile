@@ -1,0 +1,13 @@
+FROM bitnami/spark:3.5.2
+USER root
+COPY . ./mycode
+RUN pip install --no-cache-dir -r ./mycode/req.txt
+RUN apt-get update && (apt-get install nano; apt-get install sudo; apt-get install curl -y -qq)
+RUN cd jars && (curl -O https://repo1.maven.org/maven2/org/apache/spark/spark-streaming-kafka-0-10_2.12/3.5.2/spark-streaming-kafka-0-10_2.12-3.5.2.jar;\
+                curl -O https://repo1.maven.org/maven2/org/apache/commons/commons-pool2/2.12.0/commons-pool2-2.12.0.jar;\
+                curl -O https://repo1.maven.org/maven2/org/apache/spark/spark-sql-kafka-0-10_2.12/3.5.2/spark-sql-kafka-0-10_2.12-3.5.2.jar;\
+                curl -O https://repo1.maven.org/maven2/org/apache/kafka/kafka-clients/3.3.2/kafka-clients-3.3.2.jar;\
+                curl -O https://repo1.maven.org/maven2/org/apache/spark/spark-token-provider-kafka-0-10_2.12/3.5.2/spark-token-provider-kafka-0-10_2.12-3.5.2.jar;\
+                curl -O https://repo1.maven.org/maven2/org/apache/spark/spark-connect_2.12/3.5.2/spark-connect_2.12-3.5.2.jar)
+                
+CMD ["/opt/bitnami/spark/sbin/start-connect-server.sh", "--packages", "org.apache.spark:spark-connect_2.12:3.5.2"]

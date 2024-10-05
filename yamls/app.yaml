@@ -1,0 +1,50 @@
+apiVersion: apps/v1      
+kind: Deployment         
+metadata:
+  name: v-app  
+spec:
+  replicas: 1             
+  selector:               
+    matchLabels:
+      app: v-app
+  template:               
+    metadata:
+      labels:             
+        app: v-app
+    spec:
+      initContainers:
+      - name: wait-for-spark
+        image: busybox
+        command: ['sh', '-c', 'until nc -z spark 15002; do echo waiting for spark; sleep 2; done;']
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - v-app  
+            topologyKey: "kubernetes.io/hostname"
+      containers:        
+      - name: v-app
+        image: kaoutarc/myapp:1.0
+        imagePullPolicy: Always
+        ports:                      
+        - containerPort: 8501
+        command: ["sh"]
+        args: ["/app/run.sh"]
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app
+spec:
+  selector:
+    app: v-app
+  type: LoadBalancer
+  ports:
+  - port: 8501
+    targetPort: 8501 
+    # nodePort: 30000

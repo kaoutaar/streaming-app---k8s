@@ -1,0 +1,13 @@
+pandas
+pyarrow
+grpcio
+grpcio-status
+googleapis-common-protos
+py4j
+requests
+pendulum
+streamlit==1.29
+streamlit_autorefresh
+pydeck[jupyter]==0.8
+pyspark==3.5.2
+setuptools
