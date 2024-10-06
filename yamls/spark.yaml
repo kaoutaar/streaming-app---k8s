@@ -29,6 +29,7 @@ spec:
       containers:
       - name: spark
         image: kaoutarc/spark:1.0
+        imagePullPolicy: Always
         ports:
         - containerPort: 7077
         - containerPort: 4040

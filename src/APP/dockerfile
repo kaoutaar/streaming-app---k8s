@@ -1,6 +1,8 @@
 FROM python:3.12.6-slim
 
 COPY . ./app
+RUN pip install streamlit==1.29
+RUN pip install streamlit_autorefresh
 RUN pip install --no-cache-dir -r ./app/req.txt
 RUN apt-get update && (apt-get install -y cron; apt-get install sudo; apt-get install git -y -qq)
 RUN pip install git+https://github.com/dpkp/kafka-python.git

@@ -69,6 +69,8 @@ def read_data():
     .remote("sc://spark:15002")\
     .appName("ReadFromspark") \
     .getOrCreate()
+
+    spark.sql("REFRESH TABLE bike_data")
     df = spark.sql("SELECT * FROM bike_data")
     df = df.toPandas()
 
@@ -91,7 +93,7 @@ for i in range(n_trials):
         df = read_data()
     except Exception as e:
         print(e)
-        time.sleep(5)
+        time.sleep(10)
         continue
     break
 

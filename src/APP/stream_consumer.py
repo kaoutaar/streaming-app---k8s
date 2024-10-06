@@ -64,8 +64,8 @@ def main():
     def fetch_last(batch, id):
         w = Window.partitionBy(["number", "last_update"]).orderBy(F.col("last_update").desc())
         batch = batch.withColumn("rank", F.dense_rank().over(w)).filter("rank==1").dropDuplicates(["number","rank"])
-        batch.write.format("parquet").mode("overwrite").option("path", "file:/opt/bitnami/spark/spark-warehouse/bike_data").saveAsTable("bike_data")
         batch.show()
+        batch.write.format("parquet").mode("overwrite").saveAsTable("bike_data")
         
     query = df \
         .writeStream \

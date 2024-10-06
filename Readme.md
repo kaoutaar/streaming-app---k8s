@@ -136,6 +136,4 @@ in case you encounter an error with a pod:
 
 * `kubectl logs <pod-name>`
 
-* check the containers logs
-
-* for app pod, all logs are saved into /app/logs directory
+* to open a direct terminal inside the container: ``kubectl exec -it <pod-name> -- /bin/sh`` 

@@ -1,6 +1,7 @@
+pyarrow==17.0.0
+grpcio==1.66.1
+grpcio-status==1.66.1
+googleapis-common-protos==1.65.0
+protobuf==5.28.1
+py4j==0.10.9.7
 pandas
-pyarrow
-grpcio
-grpcio-status
-googleapis-common-protos
-py4j
