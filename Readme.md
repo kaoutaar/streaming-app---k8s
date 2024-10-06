@@ -108,10 +108,13 @@ Make sure all the containers are up and run in order
 kubectl apply -f ./yamls/zookeeper.yaml
 kubectl apply -f ./yamls/kafka.yaml
 kubectl apply -f ./yamls/spark.yaml
+
+#wait until previous deployments are ready before launching the app
+
 kubectl apply -f ./yamls/app.yaml
 ```
 
-check that all pods and services are running:
+To check that all pods and services are running:
 
 ``kubectl get pods``
 
@@ -119,7 +122,7 @@ check that all pods and services are running:
 ``kubectl get svc``
 
 
-only after all pods are ``READY``, you can now access the app from your browser, to do so, redirect the traffic to a port in your machine:
+If all pods are ``READY`` , now you can access the app from your browser, to do so, redirect the traffic to a port in your machine:
 
 ``kubectl port-forward service/app 8501:8501``
 
