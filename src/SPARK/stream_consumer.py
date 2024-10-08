@@ -23,7 +23,7 @@ def main():
     try:
         spark = SparkSession\
             .builder\
-            .remote("sc://spark:15002")\
+            .master("local[*]")\
             .appName('velib_stream_consumer')\
             .config("spark.sql.shuffle.partitions", 1)\
             .getOrCreate()
@@ -64,13 +64,13 @@ def main():
     def fetch_last(batch, id):
         w = Window.partitionBy(["number", "last_update"]).orderBy(F.col("last_update").desc())
         batch = batch.withColumn("rank", F.dense_rank().over(w)).filter("rank==1").dropDuplicates(["number","rank"])
-        batch.show()
-        batch.write.format("parquet").mode("overwrite").saveAsTable("bike_data")
+        batch.write.format("csv").option("header", "true").mode("overwrite").save("file:///tmp/v_data")
+        # batch.show()
         
     query = df \
         .writeStream \
         .foreachBatch(fetch_last)\
-        .trigger(processingTime="1 minute")\
+        .trigger(processingTime="2 minutes")\
         .start()\
         .awaitTermination()
     

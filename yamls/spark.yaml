@@ -15,7 +15,7 @@ spec:
       initContainers:
       - name: wait-for-kafka
         image: busybox
-        command: ['sh', '-c', 'until nc -z kafka 9092; do echo waiting for kafka; sleep 2; done;']
+        command: ['sh', '-c', 'until nc -z kafka 9092; do echo waiting for kafka; sleep 30; done;']
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -61,4 +61,3 @@ spec:
   - name: connect-server-port
     port: 15002      
     targetPort: 15002 
-  type: ClusterIP  

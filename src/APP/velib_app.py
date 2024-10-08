@@ -64,14 +64,12 @@ def serve_app(df):
 
 @st.cache_data(ttl=50)
 def read_data():
-    # fetch from spark datawarehouse
     spark = SparkSession.builder \
     .remote("sc://spark:15002")\
     .appName("ReadFromspark") \
     .getOrCreate()
 
-    spark.sql("REFRESH TABLE bike_data")
-    df = spark.sql("SELECT * FROM bike_data")
+    df = spark.read.format("csv").option("header", "true").load("file:///tmp/v_data").cache()
     df = df.toPandas()
 
     df[["lat", "lon"]] = pd.json_normalize(df["position"].apply(lambda x: json.loads(x)))

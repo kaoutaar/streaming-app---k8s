@@ -4,7 +4,7 @@
 
 The Streaming Bike Data Application utilizes the public JCDECAUX API to deliver real-time insights on bike stations, available bikes, and docking status.
 
-Data is ingested via an Apache Kafka pipeline, allowing for continuous data flow. Processing occurs with Apache Spark structured streaming using Spark Connect, which decouples the data pipeline and streamlines data transformations. After processing, the data is stored in the integrated Spark warehouse, from which it is read and served to the Streamlit web application for visualization.
+Data is ingested via an Apache Kafka pipeline, allowing for continuous data flow. Processing occurs with Apache Spark structured streaming using Spark Connect, which decouples the data pipeline and streamlines data transformations. After processing, the data is stored in a temporary file, from which it is read and served to the Streamlit web application for visualization.
 
 This interactive app provides user with immediate access to live data on bike availability and station status.
 
@@ -109,7 +109,7 @@ kubectl apply -f ./yamls/zookeeper.yaml
 kubectl apply -f ./yamls/kafka.yaml
 kubectl apply -f ./yamls/spark.yaml
 
-#wait until previous deployments are ready before launching the app
+# better wait until previous deployments are ready before launching the app
 
 kubectl apply -f ./yamls/app.yaml
 ```
@@ -122,7 +122,7 @@ To check that all pods and services are running:
 ``kubectl get svc``
 
 
-If all pods are ``READY`` , now you can access the app from your browser, to do so, redirect the traffic to a port in your machine:
+Give enough time to the app to start properly, When all pods are ``READY``, now you can access the app from your browser, to do so, redirect the traffic to a port in your machine:
 
 ``kubectl port-forward service/app 8501:8501``
 
