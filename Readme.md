@@ -108,9 +108,6 @@ Make sure all the containers are up and run in order
 kubectl apply -f ./yamls/zookeeper.yaml
 kubectl apply -f ./yamls/kafka.yaml
 kubectl apply -f ./yamls/spark.yaml
-
-# better wait until previous deployments are ready before launching the app
-
 kubectl apply -f ./yamls/app.yaml
 ```
 
